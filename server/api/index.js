@@ -20,6 +20,22 @@ mongoose
   });
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
+
+app.use((err,req,res,next)=>{
+  const statuscode= err.statuscode||500;
+  const message = err.message||'internal server error';
+  return res.status(statuscode).json({
+    success:false,
+    message,
+    statuscode,
+  })
+});
+
+
+
+
+
+
 app.listen(3000 || process.env.PORT, () => {
   console.log("Server listening on port ", process.env.PORT);
 });
