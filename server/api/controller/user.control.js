@@ -1,4 +1,4 @@
-export const usercontrol = (req, res) => {
+export const userControl = (req, res) => {
   res.json({message:'api is working bhagat aadmi tha'});
-  console.log("df");
+
 };

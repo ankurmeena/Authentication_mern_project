@@ -1,7 +1,7 @@
 import express from "express";
-import { usercontrol } from "../controller/user.control.js";
+import { userControl } from "../controller/user.control.js";
 const router = express.Router();
 console.log("df");
-router.get("/", usercontrol);
+router.get("/", userControl);
 
 export default router;
