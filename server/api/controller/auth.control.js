@@ -3,7 +3,11 @@ import bcryptjs from "bcryptjs"
 import { errorhandler } from "../utils/error.js";
 export const signup = async (req, res,next) => {
   const { username, email, password } = req.body;
-  const hashedPassword = bcryptjs.hashSync(password,10);
+  if (typeof password !== 'string' || password.length === 0) {
+    throw new Error('Invalid password');
+  }
+  const salt = bcryptjs.genSaltSync(10);
+  const hashedPassword = bcryptjs.hashSync(password,salt);
   const newUser = new User({ username, email, password:hashedPassword});
   try {
     await newUser.save();
