@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [loading,setLaoding] = useState(false);
   const [error,setError]=useState(false);
-
+  const navigate=useNavigate();
   const handleDataChanges = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
     // console.log(formData);
@@ -31,6 +31,7 @@ const SignUp = () => {
       handlereset();
       setLaoding(false);
       setError(false);
+      navigate('/sign-in');
     } catch (error) {
       console.log(error);
       setLaoding(false);
@@ -39,7 +40,7 @@ const SignUp = () => {
   };
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign-up</h1>
+      <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
       <form onSubmit={handleFormData} className="flex flex-col gap-5">
         <input
           value={formData.username}

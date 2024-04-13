@@ -31,14 +31,17 @@ export const signin = async (req, res, next) => {
       return next(errorhandler(401, "Invalid credentials "));
     }
 
-    const expiryDate = new Date(Date.now()+3600000);
+    const expiryDate = new Date(Date.now() + 3600000);
 
     const { password: hashpassword, ...rest } = validUser._doc;
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     res
-      .cookie("success_token", token, { httpOnly: true })
+      .cookie("success_token", token, {
+        httpOnly: true,
+        expires: expiryDate,
+      })
       .status(200)
-      .json({...rest,totalexpiration: expiryDate});
+      .json(rest);
   } catch (error) {
     next(error);
   }
