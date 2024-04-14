@@ -75,7 +75,7 @@ const SignIn = () => {
           <span className="text-blue-500"> Sign up</span>
         </Link>
       </div>
-      <p className="text-red-500 text-xl mt-5">{error == null ? "Something Went Wrong" : ""}</p>
+      <p className="text-red-500 text-xl mt-5">{error ? error.response.data.message || "Something Went Wrong" : ""}</p>
     </div>
   );
 };
