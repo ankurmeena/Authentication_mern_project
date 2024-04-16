@@ -10,7 +10,7 @@ const SignUp = () => {
   const navigate=useNavigate();
   const handleDataChanges = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
-    // console.log(formData);
+
   };
   const handlereset = () => {
     setFormData({

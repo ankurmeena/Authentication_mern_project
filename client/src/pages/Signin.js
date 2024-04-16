@@ -6,9 +6,10 @@ import { signInStart,signInSuccess,signInFalse } from "../Redux/User/UserSlice";
 import OAuth from "../components/OAuth";
 const SignIn = () => {
   const [formData, setFormData] = useState({});
- const {loading, error}=useSelector((state)=>state.user);
+ const {loading, error}=useSelector((state)=>state.user.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+ 
   const handleDataChanges = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
     // console.log(formData);
@@ -28,7 +29,7 @@ const SignIn = () => {
         formData
       );
       const data = await res.data;
-      console.log(data);
+     
       handlereset();
       dispatch(signInSuccess(data));
       navigate('/');
