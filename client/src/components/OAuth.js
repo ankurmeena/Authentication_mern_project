@@ -4,9 +4,11 @@ import { app } from "../Firebase";
 import { signInFalse, signInSuccess } from "../Redux/User/UserSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const OAuth = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleGoogleClick = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -22,6 +24,7 @@ const OAuth = () => {
       const data = await res.data;
       console.log(data);
       dispatch(signInSuccess(data));
+      navigate('/');
     } catch (error) {
       dispatch(signInFalse(error.message));
       console.log("could not login with google", error);
