@@ -46,3 +46,41 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+
+export const google = async (req, res, next) => {
+  const { name, email, photo } = req.body;
+  try {
+    const validUser = await User.findOne({ email });
+    if (validUser) {
+      const expiryDate = new Date(Date.now() + 3600000);
+      const { password: hashpassword, ...rest } = validUser._doc;
+      const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+      res
+        .cookie("success_token", token, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .json(rest);
+    }else{
+      const generatedPassword= Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+      const salt = bcryptjs.genSaltSync(10);
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, salt);
+      const newUser = new User({ username:name.split(" ").join("").toLowerCase()+Math.floor(Math.random()*10000).toString(), email, password: hashedPassword,profilePicture:photo });
+      await newUser.save();
+      const expiryDate = new Date(Date.now() + 3600000);
+      const { password: hashpassword, ...rest } = newUser._doc;
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      res
+        .cookie("success_token", token, {
+          httpOnly: true,
+          expires: expiryDate,
+        })
+        .status(200)
+        .json(rest);
+    res.status(201).json({ message: "User created successfully" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
