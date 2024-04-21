@@ -22,7 +22,7 @@ const OAuth = () => {
       }
       const res = await axios.post("http://localhost:3000/api/auth/google",profile);
       const data = await res.data;
-      console.log(data);
+     // console.log(data);
       dispatch(signInSuccess(data));
       navigate('/');
     } catch (error) {
