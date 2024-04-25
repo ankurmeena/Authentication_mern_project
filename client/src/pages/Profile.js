@@ -19,6 +19,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (image !== undefined) {
+      setImageError(false);
       handleFileUpload(image);
     }
   }, [image]);
